@@ -1,0 +1,23 @@
+@import "/bulma/css/bulma.css"; 
+
+body {
+    padding: 15px;
+
+    height: 100vh;
+    overflow: hidden;
+    display: grid;
+    place-items: center;
+}
+
+.fileName {
+    width: 200px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+
+    padding: 2px;
+    font-size: 1.3rem;
+    margin: 0;
+    background: white;
+    resize: horizontal;
+}

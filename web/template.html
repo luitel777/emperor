@@ -1,0 +1,45 @@
+<html>
+
+<head>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+    <h1>Hello {{index . "name"}}</h1>
+
+
+    <!-- {{if index . "if"}} hello {{end}} -->
+    {{ $filePath:= .fullFilePath }}
+    {{ $filename:= .fileName }}
+
+    <div class="columns is-multiline">
+        {{range $index,$cache:= .cacheImages }}
+        <div class="column">
+            <a href="/pdf/web/viewer.html?file=/{{index $filePath $index}}"><img src={{$cache}} width=150px><br></a>
+
+            <div class="fileName">
+                <a href="/pdf/web/viewer.html?file=/{{index $filePath $index}}">{{index $filename $index}}</a>
+            </div>
+
+            <br>
+        </div>
+        {{end}}
+    </div>
+
+
+    <!-- 
+    {{range $val := .fileName}}
+         <a href="/pdf/web/viewer.html?file=/{{$val}}">'{{$val}}'</a>
+    {{end}}
+
+    <br><br><br>
+
+    {{range $val := .cacheFile}}
+        <img src={{$val}} width=40px>
+    {{end}}
+            -->
+
+
+</body>
+
+</html>
