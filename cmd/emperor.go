@@ -12,11 +12,6 @@ import (
 	"golang.org/x/net/http2"
 )
 
-// func printHello(c echo.Context) error {
-// 	// return c.String(http.StatusOK, "hello world you have "+strconv.Itoa(listFiles())+" files in the data folder")
-// 	return c.String(http.StatusOK, "hello world you have "+listFiles()[0]+" files in the data folder")
-// }
-
 func startAndExitServer(c *echo.Echo, port int, s *http2.Server) {
 	if err := c.StartH2CServer(":"+strconv.Itoa(port), s); err != http.ErrServerClosed {
 		log.Fatal(err)
@@ -31,8 +26,7 @@ func homePage(app *echo.Echo) {
 
 	renderTemplate(app, "/", "template.html",
 		map[string]interface{}{
-			"name":         "Aagaman",
-			"if":           "ok",
+			"name":         "Emperor",
 			"fullFilePath": listFiles(),
 			"fileName":     listFileNames(),
 			"cacheImages":  listCacheFiles(),
@@ -59,6 +53,8 @@ func main() {
 	app.Static("data", "data")
 	app.Static("/", "web")
 
+	app.POST("/upload", upload)
+
 	port, a := cliemperorFlags()
 	if a == true {
 		emperorLogger(app)
@@ -70,20 +66,7 @@ func main() {
 		IdleTimeout:          10 * time.Second,
 	}
 	registerFilepath(app)
-	ticker := time.NewTicker(5 * time.Second)
-	quit := make(chan struct{})
-	go func() {
-		homePage(app)
-		for {
-			select {
-			case <-ticker.C:
-				homePage(app)
-			case <-quit:
-				ticker.Stop()
-				return
-			}
-		}
-	}()
+	homePage(app)
 
 	fmt.Printf("\n\n\n")
 	listFileNames()
