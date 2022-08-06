@@ -5,17 +5,17 @@
 </head>
 
 <body>
-    <h1>Hello {{index . "name"}}</h1>
+    <h1>Welcome to {{index . "name"}}</h1>
 
 
     <!-- {{if index . "if"}} hello {{end}} -->
     {{ $filePath:= .fullFilePath }}
     {{ $filename:= .fileName }}
 
-    <div class="columns is-multiline">
+    <div class="columns is-multiline is-desktop is-marginless">
         {{range $index,$cache:= .cacheImages }}
         <div class="column">
-            <a href="/pdf/web/viewer.html?file=/{{index $filePath $index}}"><img src={{$cache}} width=150px><br></a>
+            <a href="/pdf/web/viewer.html?file=/{{index $filePath $index}}"><img src={{$cache}}><br></a>
 
             <div class="fileName">
                 <a href="/pdf/web/viewer.html?file=/{{index $filePath $index}}">{{index $filename $index}}</a>
@@ -25,6 +25,13 @@
         </div>
         {{end}}
     </div>
+
+
+
+<form action="/upload" method="post" enctype="multipart/form-data">
+    Files: <input type="file" name="files" multiple>
+    <input type="submit" value="Submit">
+</form>
 
 
     <!-- 

@@ -4,13 +4,12 @@ body {
     padding: 15px;
 
     height: 100vh;
-    overflow: hidden;
     display: grid;
     place-items: center;
 }
 
 .fileName {
-    width: 200px;
+    width: 150px;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -20,4 +19,8 @@ body {
     margin: 0;
     background: white;
     resize: horizontal;
+}
+img{
+    height: 240px;
+    width: 150px;
 }
