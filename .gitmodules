@@ -1,3 +1,6 @@
 [submodule "web/bulma"]
 	path = web/bulma
 	url = https://github.com/jgthms/bulma
+[submodule "web/pdf"]
+	path = web/pdf
+	url = https://github.com/mozilla/pdf.js/
