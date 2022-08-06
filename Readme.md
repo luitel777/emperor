@@ -7,6 +7,11 @@ Requirements<br>
 https://go.dev/<br>
 https://github.com/libvips/libvips<br>
 
+Cloning<br>
+This project uses pdf.js and bulma css
+```
+git clone --recurse-submodules https://github.com/lenivyyluitel/emperor
+```
 Usage<br>
 ```go run cmd/*```
 or
