@@ -11,6 +11,9 @@ Cloning<br>
 This project uses pdf.js and bulma css
 ```
 git clone --recurse-submodules https://github.com/lenivyyluitel/emperor
+cd emperor
+make build
+make
 ```
 Usage<br>
 ```go run cmd/*```
