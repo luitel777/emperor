@@ -1,11 +1,11 @@
-module github.com/katana-project/Emperor
+module github.com/lenivyyluitel/Emperor
 
 go 1.18
 
 require (
 	github.com/davidbyttow/govips/v2 v2.11.0
 	github.com/labstack/echo/v4 v4.7.2
-	golang.org/x/net v0.0.0-20220728211354-c7608f3a8462
+	golang.org/x/net v0.0.0-20220805013720-a33c5aa5df48
 )
 
 require (
