@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	"io/ioutil"
+	"log"
 	"os"
 	"path/filepath"
 
@@ -11,66 +12,62 @@ import (
 
 var errorFolderPermission string = "[Error] Cannot create folder. Might be a permission issue"
 
+func checkErrorAndDie(err error) {
+	if err != nil {
+		log.Panic(err)
+	}
+}
+
 func createFolderIfNotExists() {
-	if err := os.Mkdir("./data", 0750); err != nil && !os.IsExist(err) {
+	var arrayOfFolders []string = []string{"./data", "./data/books", "./data/cache"}
+	for _, folderNames := range arrayOfFolders {
 		// one can also use fs.ErrPermission
-		fmt.Println(errorFolderPermission)
+		if err := os.Mkdir(folderNames, 0750); err != nil && !os.IsExist(err) {
+			fmt.Println(errorFolderPermission)
+		}
 	}
 
-	if err := os.Mkdir("./data/books", 0750); err != nil && !os.IsExist(err) {
-		// one can also use fs.ErrPermission
-		fmt.Println(errorFolderPermission)
-	}
-
-	if err := os.Mkdir("./data/cache", 0750); err != nil && !os.IsExist(err) {
-		// one can also use fs.ErrPermission
-		fmt.Println(errorFolderPermission)
-	}
 	listFiles()
 }
 
 func listFiles() []string {
-	os.DirFS("./data/books")
-	// a, _ := os.Open("./data/1658279373215053.png")
-	// b, _ := io.ReadAll(a)
-	a, _ := filepath.Glob("./data/books/*")
-	return a
+	files, err := filepath.Glob("./data/books/*")
+	checkErrorAndDie(err)
+	return files
 }
 
 func listFileNames() []string {
-	a, _ := ioutil.ReadDir("./data/books/")
-	var b []string
-	for _, f := range a {
-		b = append(b, f.Name())
+	files, err := ioutil.ReadDir("./data/books/")
+	checkErrorAndDie(err)
+
+	var filesArray []string
+	for _, f := range files {
+		filesArray = append(filesArray, f.Name())
 	}
-	return b
+	return filesArray
 }
 
 func listCacheFiles() []string {
 	os.DirFS("./data/cache")
-	// a, _ := os.Open("./data/1658279373215053.png")
-	// b, _ := io.ReadAll(a)
-	a, _ := filepath.Glob("./data/cache/*")
-	return a
+	imageFiles, err := filepath.Glob("./data/cache/*")
+	checkErrorAndDie(err)
 
+	return imageFiles
 }
 
 func createCacheImages() {
-	// vips starts here
 	vips.Startup(nil)
 	defer vips.Shutdown()
 
 	for i, k := range listFiles() {
 		image1, err := vips.NewImageFromFile(k)
-		checkError(err)
+		checkErrorAndDie(err)
 
 		ep := vips.NewDefaultJPEGExportParams()
 		image1bytes, _, err := image1.Export(ep)
 
 		err = ioutil.WriteFile("./data/cache/"+listFileNames()[i]+".jpeg", image1bytes, 0644)
-		checkError(err)
+		checkErrorAndDie(err)
 	}
-
-	// vips ends here
 
 }

@@ -4,9 +4,7 @@ import (
 	"fmt"
 	"log"
 	"net/http"
-	"os"
 	"strconv"
-	"time"
 
 	"github.com/labstack/echo/v4"
 	"golang.org/x/net/http2"
@@ -16,10 +14,6 @@ func startAndExitServer(c *echo.Echo, port int, s *http2.Server) {
 	if err := c.StartH2CServer(":"+strconv.Itoa(port), s); err != http.ErrServerClosed {
 		log.Fatal(err)
 	}
-}
-
-func initializeEcho() {
-
 }
 
 func homePage(app *echo.Echo) {
@@ -32,13 +26,6 @@ func homePage(app *echo.Echo) {
 			"cacheImages":  listCacheFiles(),
 			"integer":      []int{1, 2, 3},
 		})
-}
-
-func checkError(err error) {
-	if err != nil {
-		fmt.Println("error:", err)
-		os.Exit(1)
-	}
 }
 
 func main() {
@@ -60,16 +47,11 @@ func main() {
 		emperorLogger(app)
 	}
 
-	s := &http2.Server{
-		MaxConcurrentStreams: 500,
-		MaxReadFrameSize:     1010100,
-		IdleTimeout:          10 * time.Second,
-	}
 	registerFilepath(app)
 	homePage(app)
 
 	fmt.Printf("\n\n\n")
 	listFileNames()
 
-	startAndExitServer(app, port, s)
+	app.Start(":" + strconv.Itoa(port))
 }
