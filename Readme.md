@@ -10,7 +10,7 @@ https://github.com/libvips/libvips<br>
 Cloning<br>
 This project uses pdf.js and bulma css
 ```
-git clone --recurse-submodules https://github.com/lenivyyluitel/emperor
+git clone --recurse --shallow-submodules git@github.com:catrandom/emperor.git --depth=1
 cd emperor
 make build
 make
